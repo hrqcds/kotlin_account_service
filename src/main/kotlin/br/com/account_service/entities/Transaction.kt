@@ -1,10 +1,7 @@
 package br.com.account_service.entities
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import io.micronaut.data.annotation.Relation
+import jakarta.persistence.*
 import java.util.Date
 
 @Entity(name = "transactions")
@@ -14,7 +11,7 @@ data class Transaction(
     val id: String? = null,
 
     @Column(name = "account_number", length = 12, nullable = false)
-    val accountNumber: String,
+    val accountNumber: Long,
 
     @Column(length = 50, nullable = false)
     val merchant: String,
