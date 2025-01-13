@@ -27,7 +27,8 @@ Remover conta
 Desativar conta
 */
 @Singleton
-class AccountService(private val accountRepository: AccountRepository) : IAccountService {
+class AccountService(private val accountRepository: AccountRepository,
+                     private val redisService: RedisService) : IAccountService {
     override fun create(request: CreateAccountInputDTO): AccountOutputDTO {
         val result = this.accountRepository.save(CreateAccountInputDTO.generateAccount(request))
 
@@ -65,7 +66,10 @@ class AccountService(private val accountRepository: AccountRepository) : IAccoun
         if(account.isEmpty)
             throw ErrorResponse("Account not found", 404)
 
+
         val result = this.accountRepository.update(AddBalanceToAccount.generateAccount(account.get(), request))
+
+        redisService.saveAccount(request.accountNumber, AccountOutputDTO.generate(result))
 
         return AccountOutputDTO.generate(result)
     }

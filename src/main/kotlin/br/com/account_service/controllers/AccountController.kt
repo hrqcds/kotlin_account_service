@@ -6,7 +6,6 @@ import br.com.account_service.dtos.inputs.UpdateBalanceToAccount
 import br.com.account_service.dtos.outputs.AccountOutputDTO
 import br.com.account_service.dtos.outputs.AccountOutputWithPaginationDTO
 import br.com.account_service.helpers.ApiResponse
-import br.com.account_service.helpers.toApiResponse
 import br.com.account_service.helpers.toException
 import br.com.account_service.services.AccountService
 import io.micronaut.http.HttpResponse
@@ -15,6 +14,7 @@ import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Patch
+import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.QueryValue
 
@@ -49,7 +49,7 @@ class AccountController(private val accountService: AccountService) {
     }
 
     @Get("/{accountNumber}")
-    fun findByAccountNumber(accountNumber: Long): MutableHttpResponse<ApiResponse<AccountOutputDTO>>{
+    fun findByAccountNumber(@PathVariable accountNumber: Long): MutableHttpResponse<ApiResponse<AccountOutputDTO>>{
        return try {
            HttpResponse.ok(ApiResponse(accountService.findByAccountNumber(accountNumber)))
        } catch (e: Exception){
