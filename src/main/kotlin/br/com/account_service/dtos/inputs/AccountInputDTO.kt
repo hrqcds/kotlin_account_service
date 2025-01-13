@@ -17,5 +17,49 @@ data class CreateAccountInputDTO(
 
 }
 
+@Introspected
+@Serdeable.Deserializable
+data class AddBalanceToAccount(
+    val accountNumber: Long,
+    val amountMeal: Double,
+    val amountFood: Double,
+    val amountCash: Double
+){
+    companion object {
+        fun generateAccount(account: Account,newBalance: AddBalanceToAccount, ): Account {
+            return Account(
+                accountNumber = account.accountNumber,
+                username = account.username,
+                amountCash = account.amountCash + newBalance.amountCash,
+                amountFood = account.amountFood + newBalance.amountFood,
+                amountMeal = account.amountMeal + newBalance.amountMeal
+            )
+        }
+    }
+}
+
+@Introspected
+@Serdeable.Deserializable
+data class UpdateBalanceToAccount(
+    val accountNumber: Long,
+    val amountMeal: Double,
+    val amountFood: Double,
+    val amountCash: Double
+){
+    companion object {
+        fun generateAccount(account: Account, updateValue: UpdateBalanceToAccount): Account {
+            return Account(
+                accountNumber = account.accountNumber,
+                username = account.username,
+                amountCash = updateValue.amountCash,
+                amountFood = updateValue.amountFood,
+                amountMeal = updateValue.amountMeal
+            )
+        }
+    }
+}
+
+
+
 
 

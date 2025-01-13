@@ -22,7 +22,7 @@ data class AccountOutputDTO(
 
     companion object {
         fun generate(data: Account): AccountOutputDTO{
-            val total = data.amountMeal + data.amountMeal + data.amountFood
+            val total = data.amountMeal + data.amountCash + data.amountFood
             return AccountOutputDTO(
                 username = data.username,
                 amountCash = data.amountCash,
@@ -35,3 +35,22 @@ data class AccountOutputDTO(
     }
 
 }
+
+@Introspected
+@Serdeable.Serializable
+data class AccountOutputWithPaginationDTO(
+    val accounts: List<AccountOutputDTO>,
+    val total: Long,
+    val page: Int
+){
+    companion object {
+        fun generate(accounts: List<AccountOutputDTO>, total: Long, page: Int): AccountOutputWithPaginationDTO{
+            return AccountOutputWithPaginationDTO(
+                accounts = accounts,
+                total = total,
+                page = page.let { if(it == 0) 1 else it + 1 }
+            )
+        }
+    }
+}
+
