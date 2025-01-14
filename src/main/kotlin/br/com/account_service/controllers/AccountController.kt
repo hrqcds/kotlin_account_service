@@ -18,7 +18,7 @@ import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.QueryValue
 
-@Controller("/accounts")
+@Controller("/")
 class AccountController(private val accountService: AccountService) {
 
     @Post

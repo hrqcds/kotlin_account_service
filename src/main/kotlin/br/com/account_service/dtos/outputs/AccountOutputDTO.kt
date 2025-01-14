@@ -1,6 +1,7 @@
 package br.com.account_service.dtos.outputs
 
 import br.com.account_service.entities.Account
+import br.com.account_service.helpers.ValidDecimal
 import io.micronaut.core.annotation.Introspected
 import io.micronaut.serde.annotation.Serdeable
 
@@ -22,12 +23,12 @@ data class AccountOutputDTO(
 
     companion object {
         fun generate(data: Account): AccountOutputDTO{
-            val total = data.amountMeal + data.amountCash + data.amountFood
+            val total = ValidDecimal.convert(data.amountMeal + data.amountCash + data.amountFood)
             return AccountOutputDTO(
                 username = data.username,
-                amountCash = data.amountCash,
-                amountFood = data.amountFood,
-                amountMeal = data.amountMeal,
+                amountCash = ValidDecimal.convert(data.amountCash),
+                amountFood = ValidDecimal.convert(data.amountFood),
+                amountMeal = ValidDecimal.convert(data.amountMeal),
                 accountNumber = data.accountNumber,
                 totalAmount = total
             )
