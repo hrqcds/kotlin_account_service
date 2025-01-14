@@ -8,7 +8,7 @@ import redis.clients.jedis.JedisPoolConfig
 
 @Singleton
 class RedisService(private val objectMapper: ObjectMapper) {
-    private val jedisPool = JedisPool(JedisPoolConfig(), "127.0.0.1", 6379)
+    private val jedisPool = JedisPool(JedisPoolConfig(), "redis", 6379)
     private val jedis = jedisPool.resource
 
     fun saveAccount(key: Long, value: AccountOutputDTO) {
